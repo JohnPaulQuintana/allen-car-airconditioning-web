@@ -290,11 +290,11 @@ if (error) {
                                 {part.name}
                               </span>
 
-                              <span className="font-semibold text-primary">
+                              {/* <span className="font-semibold text-primary">
                                 {part.price
                                   ? `₱${Number(part.price).toLocaleString()}`
                                   : "-"}
-                              </span>
+                              </span> */}
                             </div>
                           ))}
                         </div>
