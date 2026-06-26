@@ -81,14 +81,15 @@ export function useVehicleDetails() {
 
   const addNewHistory = async (
     vehicle_id: number,
-    parts: ServicePart[]
+    parts: ServicePart[],
+    serviceDate?:string
   ) => {
     console.log(vehicle_id, parts);
     try {
       // setLoading(true);
       setError("");
       setSuccess("")
-      const response: any = await vehicleService.addNewService({vehicle_id, parts});
+      const response: any = await vehicleService.addNewService({vehicle_id, parts, serviceDate});
 
       // console.log(response)
       if (response.success) {

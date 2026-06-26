@@ -1,4 +1,10 @@
-import { FiArrowLeft, FiTruck, FiUser, FiPlus, FiAlertCircle } from "react-icons/fi";
+import {
+  FiArrowLeft,
+  FiTruck,
+  FiUser,
+  FiPlus,
+  FiAlertCircle,
+} from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useEffect, useState } from "react";
@@ -34,9 +40,10 @@ export default function VehicleResultPage() {
   // add new history
   const addNewHistoryState = async (
     vehicle_id: number,
-    parts: ServicePart[]
+    parts: ServicePart[],
+    serviceDate: string | undefined,
   ) => {
-    const result = await addNewHistory(vehicle_id, parts);
+    const result = await addNewHistory(vehicle_id, parts, serviceDate);
     // console.log(result);
     if (result.success) {
       setPopup({
@@ -74,55 +81,53 @@ export default function VehicleResultPage() {
       </DashboardLayout>
     );
   }
-if (error) {
-  return (
-    <DashboardLayout>
-      <div className="max-w-4xl mx-auto py-20 px-6">
-        <div className="bg-white rounded-3xl border border-red-100 shadow-sm overflow-hidden">
-          <div className="bg-red-50 px-8 py-6 border-b border-red-100">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
-                <FiAlertCircle className="text-red-600" size={28} />
-              </div>
+  if (error) {
+    return (
+      <DashboardLayout>
+        <div className="max-w-4xl mx-auto py-20 px-6">
+          <div className="bg-white rounded-3xl border border-red-100 shadow-sm overflow-hidden">
+            <div className="bg-red-50 px-8 py-6 border-b border-red-100">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+                  <FiAlertCircle className="text-red-600" size={28} />
+                </div>
 
-              <div>
-                <p className="text-sm uppercase tracking-wider text-red-500">
-                  Error
-                </p>
+                <div>
+                  <p className="text-sm uppercase tracking-wider text-red-500">
+                    Error
+                  </p>
 
-                <h2 className="text-2xl font-bold text-slate-800 mt-1">
-                  Unable to Load Vehicle
-                </h2>
+                  <h2 className="text-2xl font-bold text-slate-800 mt-1">
+                    Unable to Load Vehicle
+                  </h2>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="px-8 py-8">
-            <p className="text-slate-600 leading-relaxed">
-              {error}
-            </p>
+            <div className="px-8 py-8">
+              <p className="text-slate-600 leading-relaxed">{error}</p>
 
-            <div className="mt-8 flex gap-3">
-              <button
-                onClick={() => navigate(-1)}
-                className="px-6 py-3 rounded-2xl bg-primary text-white font-medium hover:opacity-90 transition"
-              >
-                Go Back
-              </button>
+              <div className="mt-8 flex gap-3">
+                <button
+                  onClick={() => navigate(-1)}
+                  className="px-6 py-3 rounded-2xl bg-primary text-white font-medium hover:opacity-90 transition"
+                >
+                  Go Back
+                </button>
 
-              <button
-                onClick={() => window.location.reload()}
-                className="px-6 py-3 rounded-2xl border border-slate-200 hover:bg-slate-50 transition"
-              >
-                Try Again
-              </button>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="px-6 py-3 rounded-2xl border border-slate-200 hover:bg-slate-50 transition"
+                >
+                  Try Again
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </DashboardLayout>
-  );
-}
+      </DashboardLayout>
+    );
+  }
 
   if (!vehicle) {
     return (
@@ -311,7 +316,9 @@ if (error) {
       <AddHistoryModal
         open={showModal}
         onClose={() => setShowModal(false)}
-        onSave={(parts) => addNewHistoryState(vehicle.id, parts)}
+        onSave={(parts, serviceDate) =>
+          addNewHistoryState(vehicle.id, parts, serviceDate)
+        }
       />
 
       {/* Success and Error Components Popup */}

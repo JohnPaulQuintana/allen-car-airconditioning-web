@@ -7,7 +7,7 @@ interface AddHistoryModalProps {
   open: boolean;
   loading?: boolean;
   onClose: () => void;
-  onSave: (parts: ServicePart[]) => Promise<void> | void;
+  onSave: (parts: ServicePart[], serviceDate?: string) => Promise<void> | void;
 }
 
 const EMPTY_PART: ServicePart = {
@@ -21,6 +21,7 @@ export default function AddHistoryModal({
   onClose,
   onSave,
 }: AddHistoryModalProps) {
+  const [serviceDate, setServiceDate] = useState("");
   const [parts, setParts] = useState<ServicePart[]>([EMPTY_PART]);
 
   const [errors, setErrors] = useState<Record<number, string>>({});
@@ -29,6 +30,7 @@ export default function AddHistoryModal({
     if (!open) {
       setParts([{ ...EMPTY_PART }]);
       setErrors({});
+      setServiceDate("");
     }
   }, [open]);
 
@@ -88,7 +90,7 @@ export default function AddHistoryModal({
       return;
     }
 
-    await onSave(parts);
+    await onSave(parts, serviceDate || undefined);
 
     setParts([{ ...EMPTY_PART }]);
     setErrors({});
@@ -123,6 +125,24 @@ export default function AddHistoryModal({
 
         {/* Body */}
         <div className="max-h-[65vh] space-y-4 overflow-y-auto p-6">
+          {/* Service Date */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <label className="text-sm text-slate-500">
+              Service Date <span className="text-slate-400">(Optional)</span>
+            </label>
+
+            <input
+              type="date"
+              value={serviceDate}
+              onChange={(e) => setServiceDate(e.target.value)}
+              className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
+            />
+
+            <p className="mt-2 text-xs text-slate-500">
+              Leave this blank for today's service. Only set a date when adding
+              an older service record.
+            </p>
+          </div>
           {parts.map((part: ServicePart, index: number) => (
             <div
               key={index}

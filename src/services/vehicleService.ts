@@ -21,7 +21,8 @@ export interface CreateVehiclePayload {
 
 export interface AddNewHistory {
   vehicle_id: number,
-  parts: ServicePart[]
+  parts: ServicePart[],
+  serviceDate?: string
 }
 
 export interface Vehicle {
