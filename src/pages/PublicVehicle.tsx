@@ -1,7 +1,7 @@
 import {
   FiSearch,
   FiCamera,
-  FiPlus,
+  // FiPlus,
   FiTruck,
   FiChevronRight,
 } from "react-icons/fi";

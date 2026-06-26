@@ -2,7 +2,7 @@ import {
   FiHome,
   FiTruck,
   FiUsers,
-  FiSettings,
+  // FiSettings,
 } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 

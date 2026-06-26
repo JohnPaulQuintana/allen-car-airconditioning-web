@@ -21,7 +21,7 @@ export function useAuth() {
       const response = await authService.login({
         email,
         password,
-      });
+      }) as any;
 
       localStorage.setItem(
         "token",
