@@ -278,9 +278,9 @@ export default function VehicleResultPage() {
                               {entry.parts.length} Parts
                             </span>
 
-                            <span className="px-3 py-1 rounded-xl bg-green-50 text-primary text-sm font-medium">
+                            {/* <span className="px-3 py-1 rounded-xl bg-green-50 text-primary text-sm font-medium">
                               ₱{Number(entry.total_amount).toLocaleString()}
-                            </span>
+                            </span> */}
                           </div>
                         </div>
 
