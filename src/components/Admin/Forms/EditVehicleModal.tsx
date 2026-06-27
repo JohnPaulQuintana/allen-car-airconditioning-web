@@ -62,7 +62,7 @@ export default function EditVehicleModal({
           <h2 className="text-2xl font-bold text-primary">Edit Vehicle</h2>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 mb-10">
           <div>
             <h3 className="font-semibold text-primary mb-4">
               Owner Information

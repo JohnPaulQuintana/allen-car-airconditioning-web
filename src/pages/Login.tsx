@@ -13,7 +13,7 @@ export default function LoginPage() {
   const { login, loading, error, success } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#001845] relative overflow-hidden flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#001845] relative overflow-y-auto flex items-start lg:items-center justify-center py-8 px-4">
       {/* Background Effects */}
       <div className="absolute top-[-200px] left-[-150px] w-[500px] h-[500px] rounded-full bg-blue-500/20 blur-3xl" />
 
@@ -42,14 +42,14 @@ export default function LoginPage() {
         </div>
 
         {/* Login */}
-        <div className="bg-white p-8 lg:p-16 flex flex-col justify-center">
+        <div className="bg-white p-6 sm:p-8 lg:p-16 flex flex-col justify-center">
           <div className="max-w-md mx-auto w-full">
             <div className="mb-10">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#001845]/5 text-[#001845] text-sm font-medium">
                 Welcome Back
               </div>
 
-              <h2 className="text-4xl font-bold text-[#001845] mt-4">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#001845] mt-4">
                 Sign In
               </h2>
 
