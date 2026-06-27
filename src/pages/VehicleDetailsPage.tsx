@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   FiTruck,
@@ -6,13 +6,15 @@ import {
   FiDollarSign,
   FiCalendar,
   FiArrowLeft,
+  FiEdit2,
 } from "react-icons/fi";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useVehicleDetails } from "../hooks/useVehicleDetails";
+import EditVehicleModal from "../components/Admin/Forms/EditVehicleModal";
 
 export default function VehicleDetailsPage() {
   const { id } = useParams();
-
+  const [editOpen, setEditOpen] = useState(false);
   const navigate = useNavigate();
 
   const { vehicle, stats, timeline, loading, error, fetchVehicle } =
@@ -77,27 +79,33 @@ export default function VehicleDetailsPage() {
         <div className="bg-primary rounded-3xl p-8 text-white">
           <button
             onClick={() => navigate(-1)}
-            className="
-      inline-flex
-      items-center
-      gap-2
-      text-white/80
-      hover:text-white
-      transition
-      mb-6
-    "
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white transition mb-6"
           >
             <FiArrowLeft size={18} />
             <span>Back</span>
           </button>
 
-          <p className="text-white/60 uppercase text-xs tracking-wider">
-            Vehicle Profile
-          </p>
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <div>
+              <p className="text-white/60 uppercase text-xs tracking-wider">
+                Vehicle Profile
+              </p>
 
-          <h1 className="text-4xl font-bold mt-2">{vehicle.plate_number}</h1>
+              <h1 className="text-4xl font-bold mt-2">
+                {vehicle.plate_number}
+              </h1>
 
-          <p className="mt-2 text-white/70">{vehicle.vehicle_name}</p>
+              <p className="mt-2 text-white/70">{vehicle.vehicle_name}</p>
+            </div>
+
+            <button
+              onClick={() => setEditOpen(true)}
+              className="bg-white text-primary px-5 py-3 rounded-2xl font-semibold flex items-center gap-2 hover:bg-slate-100 transition"
+            >
+              <FiEdit2 />
+              Edit Vehicle
+            </button>
+          </div>
         </div>
 
         {/* Stats */}
@@ -247,6 +255,16 @@ export default function VehicleDetailsPage() {
           )}
         </div>
       </div>
+
+      <EditVehicleModal
+        open={editOpen}
+        vehicle={vehicle}
+        onClose={() => setEditOpen(false)}
+        onSaved={() => {
+          fetchVehicle(Number(id));
+          setEditOpen(false);
+        }}
+      />
     </DashboardLayout>
   );
 }

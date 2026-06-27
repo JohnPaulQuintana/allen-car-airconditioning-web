@@ -16,14 +16,14 @@ const tabs = [
 
 export default function MobileTabs() {
   return (
-    <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center lg:hidden">
+    <div className="fixed bottom-4 left-0 right-0 z-50 flex justify-center lg:hidden">
       <div
         className="
           w-[92%]
           max-w-md
           bg-[#001845]
           rounded-[28px]
-          p-3
+          p-1
           shadow-[0_12px_40px_rgba(0,24,69,0.18)]
         "
       >

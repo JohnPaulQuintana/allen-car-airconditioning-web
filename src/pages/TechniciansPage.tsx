@@ -1,7 +1,7 @@
 import {
   FiUsers,
-  FiSmartphone,
-  FiShield,
+  // FiSmartphone,
+  // FiShield,
   FiChevronRight,
   FiGrid,
 } from "react-icons/fi";
@@ -257,47 +257,51 @@ export default function TechniciansPage() {
         </div>
 
         {/* Mobile Cards */}
-        <div className="lg:hidden space-y-3">
+        <div className="lg:hidden space-y-2">
           {technicians.map((tech) => (
             <div
               key={tech.id}
-              className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm"
+              className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4"
             >
-              <div className="flex items-start justify-between">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <FiUsers className="text-primary" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <FiUsers className="text-primary text-lg" />
                   </div>
 
-                  <div>
-                    <h3 className="font-semibold text-primary">{tech.name}</h3>
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-slate-800 truncate">
+                      {tech.name}
+                    </h3>
 
-                    <p className="text-sm text-slate-500 capitalize">
+                    <p className="text-xs text-slate-500 capitalize">
                       {tech.role}
                     </p>
                   </div>
                 </div>
 
-                <FiChevronRight />
+                <FiChevronRight className="text-slate-400" />
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mt-4">
-                <div className="bg-slate-50 rounded-2xl p-3">
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <FiShield />
-                    Status
-                  </div>
-
-                  <p className="font-medium mt-1">{tech.status}</p>
+              <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100 text-sm">
+                <div>
+                  <p className="text-slate-400 text-xs">Status</p>
+                  <span
+                    className={`inline-flex mt-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                      tech.status === "Connected"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }`}
+                  >
+                    {tech.status}
+                  </span>
                 </div>
 
-                <div className="bg-slate-50 rounded-2xl p-3">
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <FiSmartphone />
-                    Paired
-                  </div>
-
-                  <p className="font-xs mt-1">{tech.paired_at}</p>
+                <div className="text-right">
+                  <p className="text-slate-400 text-xs">Paired</p>
+                  <p className="font-medium text-slate-700 text-xs">
+                    {tech.paired_at || "-"}
+                  </p>
                 </div>
               </div>
             </div>

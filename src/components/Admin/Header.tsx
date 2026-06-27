@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiBell, FiUser, FiLogOut } from "react-icons/fi";
+import { FiUser, FiLogOut } from "react-icons/fi";
 import logo from "../../assets/images/logo-white.png";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -24,7 +24,7 @@ export default function Header() {
 
           <div>
             <h1 className="text-white font-bold">
-              Allen Aircon
+              Allen Car Aircon
             </h1>
 
             <p className="text-white/50 text-xs">
@@ -34,9 +34,9 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center">
+          {/* <button className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center">
             <FiBell />
-          </button>
+          </button> */}
 
           <div className="relative">
             <button

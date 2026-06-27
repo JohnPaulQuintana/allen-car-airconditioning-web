@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { FiSave, FiX } from "react-icons/fi";
-
+import { FiPlus, FiSave, FiX } from "react-icons/fi";
+import Popup from "../../Popup";
+import PopupDarker from "../../PopupDarker";
 interface AddVehicleFormProps {
   onSubmit?: (data: {
     ownerName: string;
@@ -33,6 +34,12 @@ export default function AddVehicleForm({
     vehicle: "",
     plateNumber: "",
     date: today,
+  });
+  const [popup, setPopup] = useState({
+    open: false,
+    type: "success" as "success" | "error",
+    title: "",
+    message: "",
   });
 
   const addPart = () => {
@@ -73,8 +80,46 @@ export default function AddVehicleForm({
     }));
   };
 
+ 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!form.ownerName.trim()) {
+      return setPopup({
+        open: true,
+        type: "error",
+        title: "Owner Name Required",
+        message: "Please enter the vehicle owner's name.",
+      });
+    }
+
+    if (!form.vehicle.trim()) {
+      return setPopup({
+        open: true,
+        type: "error",
+        title: "Vehicle Required",
+        message: "Please enter the vehicle name.",
+      });
+    }
+
+    if (!form.plateNumber.trim()) {
+      return setPopup({
+        open: true,
+        type: "error",
+        title: "Plate Number Required",
+        message: "Please enter the vehicle plate number.",
+      });
+    }
+
+    if (parts.some((p) => !p.name.trim())) {
+      return setPopup({
+        open: true,
+        type: "error",
+        title: "Invalid Parts",
+        message: "Every part must have a name.",
+      });
+    }
 
     onSubmit?.({
       ...form,
@@ -188,47 +233,67 @@ export default function AddVehicleForm({
               </p>
             </div>
 
-            <button
+            <div
+              onClick={addPart}
+              className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center"
+            >
+              <FiPlus />
+            </div>
+
+            {/* <button
               type="button"
               onClick={addPart}
               className="px-4 py-2 rounded-xl bg-primary text-white text-sm"
             >
               + Add Part
-            </button>
+            </button> */}
           </div>
 
-          <div className="space-y-3">
-            {parts.map((part, index) => (
-              <div
-                key={index}
-                className="grid md:grid-cols-[1fr_180px_auto] gap-3"
-              >
-                <input
-                  type="text"
-                  value={part.name}
-                  onChange={(e) => updatePart(index, "name", e.target.value)}
-                  placeholder="Part Name"
-                  className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
-                />
+          <div className="space-y-4">
+            {[...parts].reverse().map((part, reverseIndex) => {
+              const index = parts.length - 1 - reverseIndex;
 
-                <input
-                  type="number"
-                  value={part.price}
-                  onChange={(e) => updatePart(index, "price", e.target.value)}
-                  placeholder="Price (Optional)"
-                  className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
-                />
+              return (
+                <div key={index}>
+                  <div className="grid md:grid-cols-[1fr_180px_auto] gap-3 items-center">
+                    <input
+                      type="text"
+                      value={part.name}
+                      onChange={(e) =>
+                        updatePart(index, "name", e.target.value)
+                      }
+                      placeholder="Part Name"
+                      className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
+                    />
 
-                <button
-                  type="button"
-                  onClick={() => removePart(index)}
-                  disabled={parts.length === 1}
-                  className="px-4 py-3 w-fit rounded-2xl border border-red-200 text-red-500 disabled:opacity-50"
-                >
-                  <FiX />
-                </button>
-              </div>
-            ))}
+                    <input
+                      type="number"
+                      value={part.price}
+                      onChange={(e) =>
+                        updatePart(index, "price", e.target.value)
+                      }
+                      placeholder="Price (Optional)"
+                      className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
+                    />
+
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => removePart(index)}
+                        disabled={parts.length === 1}
+                        className="w-8 h-8 text-white rounded-xl bg-red-500 hover:bg-red-600 disabled:opacity-50 flex items-center justify-center"
+                      >
+                        <FiX />
+                      </button>
+                    </div>
+                  </div>
+
+                  {reverseIndex < parts.length - 1 && (
+                    <div className="my-4 border-t border-slate-200" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -243,6 +308,20 @@ export default function AddVehicleForm({
           Save Vehicle
         </button>
       </div>
+
+
+      <PopupDarker
+  open={popup.open}
+  type={popup.type}
+  title={popup.title}
+  message={popup.message}
+  onClose={() =>
+    setPopup((prev) => ({
+      ...prev,
+      open: false,
+    }))
+  }
+/>
     </form>
   );
 }

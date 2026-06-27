@@ -20,9 +20,9 @@ export interface CreateVehiclePayload {
 }
 
 export interface AddNewHistory {
-  vehicle_id: number,
-  parts: ServicePart[],
-  serviceDate?: string
+  vehicle_id: number;
+  parts: ServicePart[];
+  serviceDate?: string;
 }
 
 export interface Vehicle {
@@ -137,10 +137,19 @@ export const vehicleService = {
     return api(`/vehicles/plate/${plateNumber}`);
   },
 
-  addNewService(payload: AddNewHistory){
+  addNewService(payload: AddNewHistory) {
     return api("/vehicle/plate/history", {
       method: "POST",
       body: JSON.stringify(payload),
     });
-  }
+  },
+  update(id: number, data: any) {
+    return api(`/vehicles/${id}`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...data,
+        _method: "PUT",
+      }),
+    });
+  },
 };

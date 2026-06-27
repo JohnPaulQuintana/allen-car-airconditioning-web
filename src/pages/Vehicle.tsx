@@ -84,7 +84,7 @@ export default function VehiclesPage() {
 
   return (
     <DashboardLayout>
-      <div className="w-full max-w-7xl mx-auto space-y-6 pb-24 overflow-x-hidden">
+      <div className="w-full max-w-7xl mx-auto space-y-6 overflow-x-hidden">
         {/* Search + Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5">
           {/* Search */}
@@ -108,7 +108,7 @@ export default function VehiclesPage() {
                   value={searchPlate}
                   onChange={(e) => setSearchPlate(e.target.value)}
                   placeholder="Plate Number or Customer Name"
-                  className="flex-1 px-3 py-4 outline-none text-slate-700 bg-transparent"
+                  className="flex-1 px-3 py-3 outline-none text-slate-700 bg-transparent"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleSearch();
@@ -124,7 +124,7 @@ export default function VehiclesPage() {
       bg-white
       text-primary
       px-6
-      py-4
+      py-3
       rounded-2xl
       font-semibold
       border
@@ -144,7 +144,7 @@ export default function VehiclesPage() {
       bg-white
       text-primary
       px-5
-      py-4
+      py-3
       rounded-2xl
       font-semibold
       flex
@@ -162,12 +162,12 @@ export default function VehiclesPage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid gap-4">
+          {/* <div className="grid gap-4">
             <button
               onClick={() => navigate("/vehicle/add")}
               className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm text-left hover:shadow-md transition"
             >
-              <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center">
                 <FiPlus />
               </div>
 
@@ -177,7 +177,7 @@ export default function VehiclesPage() {
                 Register new vehicle
               </p>
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Stats */}
@@ -212,9 +212,12 @@ export default function VehiclesPage() {
           <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
             <h2 className="font-semibold text-primary">Vehicle Records</h2>
 
-            <button className="text-sm text-primary font-medium">
-              View All
-            </button>
+            <div
+              onClick={() => navigate("/vehicle/add")}
+              className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center"
+            >
+              <FiPlus />
+            </div>
           </div>
 
           {!loading && vehicles.length === 0 && (

@@ -23,7 +23,7 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   return (
     <DashboardLayout>
-      <div className="max-w-7xl mx-auto p-2 space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* Hero */}
         <div className="bg-primary rounded-[22px] p-8 text-white relative overflow-hidden">
           <div className="absolute right-0 top-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
@@ -61,13 +61,13 @@ export default function DashboardPage() {
               <div>
                 <p className="text-slate-500 text-sm">Registered Vehicles</p>
 
-                <h2 className="text-4xl font-bold text-primary mt-2">
+                <h2 className="text-2xl font-bold text-primary mt-2">
                   {stats?.total_vehicles}
                 </h2>
               </div>
 
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <FiTruck className="text-primary" size={24} />
+              <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <FiTruck className="text-primary" size={20} />
               </div>
             </div>
           </div>
@@ -77,13 +77,13 @@ export default function DashboardPage() {
               <div>
                 <p className="text-slate-500 text-sm">Service Records</p>
 
-                <h2 className="text-4xl font-bold text-primary mt-2">
+                <h2 className="text-2xl font-bold text-primary mt-2">
                   {stats?.service_records}
                 </h2>
               </div>
 
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <FiFileText className="text-primary" size={24} />
+              <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <FiFileText className="text-primary" size={20} />
               </div>
             </div>
           </div>
@@ -93,19 +93,18 @@ export default function DashboardPage() {
               <div>
                 <p className="text-slate-500 text-sm">Connected Device</p>
 
-                <h2 className="text-4xl font-bold text-primary mt-2">
+                <h2 className="text-2xl font-bold text-primary mt-2">
                   {stats?.total_technicians}
                 </h2>
               </div>
 
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <FiSmartphone className="text-primary" size={24} />
+              <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <FiSmartphone className="text-primary" size={20} />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Recent Activity */}
         {/* Recent Activity */}
         <div className="bg-white rounded-[32px] border border-slate-100 overflow-hidden">
           <div className="p-6 border-b border-slate-100 flex items-center justify-between">
@@ -142,7 +141,7 @@ export default function DashboardPage() {
                       {activity.label}
                     </p>
 
-                    <p className="text-sm text-slate-500 truncate">
+                    <p className="text-sm text-slate-500">
                       {activity.title}
 
                       {activity.total_parts && (

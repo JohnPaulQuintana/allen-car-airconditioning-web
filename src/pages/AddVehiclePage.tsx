@@ -63,7 +63,7 @@ export default function AddVehiclePage() {
           </p>
         </div>
 
-        {error && (
+        {/* {error && (
           <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
             {error}
           </div>
@@ -73,7 +73,7 @@ export default function AddVehiclePage() {
           <div className="rounded-2xl border border-green-200 bg-green-50 p-4 text-green-600">
             {success}
           </div>
-        )}
+        )} */}
 
         {/* Form */}
         <AddVehicleForm
