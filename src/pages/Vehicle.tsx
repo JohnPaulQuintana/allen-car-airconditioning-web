@@ -78,6 +78,33 @@ export default function VehiclesPage() {
     navigate(`/result/${value.toUpperCase()}`);
   };
 
+  const getPageNumbers = (current: number, total: number, siblingCount = 1) => {
+    const pages: (number | "...")[] = [];
+
+    const left = Math.max(current - siblingCount, 2);
+    const right = Math.min(current + siblingCount, total - 1);
+
+    pages.push(1);
+
+    if (left > 2) {
+      pages.push("...");
+    }
+
+    for (let i = left; i <= right; i++) {
+      pages.push(i);
+    }
+
+    if (right < total - 1) {
+      pages.push("...");
+    }
+
+    if (total > 1) {
+      pages.push(total);
+    }
+
+    return pages;
+  };
+
   useEffect(() => {
     fetchVehicles(1);
   }, []);
@@ -319,44 +346,54 @@ export default function VehiclesPage() {
           )}
 
           {pagination.lastPage > 1 && (
-            <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+            <div className="w-full flex flex-col lg:flex-row p-2 items-center justify-center bg-slate-200 rounded-md">
               <p className="text-sm text-slate-500">
                 Showing {vehicles.length} of {pagination.total} vehicles
               </p>
-
-              <div className="flex items-center gap-2">
-                <button
-                  disabled={pagination.currentPage === 1}
-                  onClick={() => fetchVehicles(pagination.currentPage - 1)}
-                  className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  ←
-                </button>
-
-                {Array.from(
-                  { length: pagination.lastPage },
-                  (_, i) => i + 1,
-                ).map((page) => (
+              <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <button
-                    key={page}
-                    onClick={() => fetchVehicles(page)}
-                    className={`h-10 w-10 rounded-xl text-sm font-medium transition ${
-                      page === pagination.currentPage
-                        ? "bg-primary text-white shadow-sm"
-                        : "border border-slate-200 bg-white hover:bg-slate-50 text-slate-700"
-                    }`}
+                    disabled={pagination.currentPage === 1}
+                    onClick={() => fetchVehicles(pagination.currentPage - 1)}
+                    className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {page}
+                    ←
                   </button>
-                ))}
 
-                <button
-                  disabled={pagination.currentPage === pagination.lastPage}
-                  onClick={() => fetchVehicles(pagination.currentPage + 1)}
-                  className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  →
-                </button>
+                  {getPageNumbers(
+                    pagination.currentPage,
+                    pagination.lastPage,
+                  ).map((page, index) =>
+                    page === "..." ? (
+                      <span
+                        key={`dots-${index}`}
+                        className="px-2 text-slate-400"
+                      >
+                        ...
+                      </span>
+                    ) : (
+                      <button
+                        key={page}
+                        onClick={() => fetchVehicles(page)}
+                        className={`h-10 w-10 rounded-xl text-sm font-medium transition ${
+                          page === pagination.currentPage
+                            ? "bg-primary text-white shadow-sm"
+                            : "border border-slate-200 bg-white hover:bg-slate-50 text-slate-700"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ),
+                  )}
+
+                  <button
+                    disabled={pagination.currentPage === pagination.lastPage}
+                    onClick={() => fetchVehicles(pagination.currentPage + 1)}
+                    className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    →
+                  </button>
+                </div>
               </div>
             </div>
           )}
