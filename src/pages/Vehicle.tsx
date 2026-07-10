@@ -346,16 +346,18 @@ export default function VehiclesPage() {
           )}
 
           {pagination.lastPage > 1 && (
-            <div className="w-full flex flex-col lg:flex-row p-2 items-center justify-center bg-slate-200 rounded-md">
-              <p className="text-sm text-slate-500">
-                Showing {vehicles.length} of {pagination.total} vehicles
-              </p>
-              <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+            <div className="border-t border-slate-100 px-4 py-4">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <p className="text-sm text-slate-500 text-center lg:text-left">
+                  Showing {vehicles.length} of {pagination.total} vehicles
+                </p>
+
+                {/* Desktop */}
+                <div className="hidden sm:flex items-center gap-2">
                   <button
                     disabled={pagination.currentPage === 1}
                     onClick={() => fetchVehicles(pagination.currentPage - 1)}
-                    className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="h-10 w-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40"
                   >
                     ←
                   </button>
@@ -365,20 +367,17 @@ export default function VehiclesPage() {
                     pagination.lastPage,
                   ).map((page, index) =>
                     page === "..." ? (
-                      <span
-                        key={`dots-${index}`}
-                        className="px-2 text-slate-400"
-                      >
+                      <span key={index} className="px-2 text-slate-400">
                         ...
                       </span>
                     ) : (
                       <button
                         key={page}
                         onClick={() => fetchVehicles(page)}
-                        className={`h-10 w-10 rounded-xl text-sm font-medium transition ${
+                        className={`h-10 w-10 rounded-xl text-sm font-medium ${
                           page === pagination.currentPage
-                            ? "bg-primary text-white shadow-sm"
-                            : "border border-slate-200 bg-white hover:bg-slate-50 text-slate-700"
+                            ? "bg-primary text-white"
+                            : "border border-slate-200 bg-white hover:bg-slate-50"
                         }`}
                       >
                         {page}
@@ -389,7 +388,30 @@ export default function VehiclesPage() {
                   <button
                     disabled={pagination.currentPage === pagination.lastPage}
                     onClick={() => fetchVehicles(pagination.currentPage + 1)}
-                    className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="h-10 w-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40"
+                  >
+                    →
+                  </button>
+                </div>
+
+                {/* Mobile */}
+                <div className="flex sm:hidden items-center justify-between gap-3">
+                  <button
+                    disabled={pagination.currentPage === 1}
+                    onClick={() => fetchVehicles(pagination.currentPage - 1)}
+                    className="h-10 px-4 rounded-xl border border-slate-200 bg-white disabled:opacity-40"
+                  >
+                    ←
+                  </button>
+
+                  <span className="text-sm font-medium text-slate-700">
+                    Page {pagination.currentPage} of {pagination.lastPage}
+                  </span>
+
+                  <button
+                    disabled={pagination.currentPage === pagination.lastPage}
+                    onClick={() => fetchVehicles(pagination.currentPage + 1)}
+                    className="h-10 px-4 rounded-xl border border-slate-200 bg-white disabled:opacity-40"
                   >
                     →
                   </button>
