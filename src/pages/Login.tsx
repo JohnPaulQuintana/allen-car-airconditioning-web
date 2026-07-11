@@ -110,13 +110,13 @@ export default function LoginPage() {
         <div className="relative mt-24">
           <div className="absolute inset-0 bg-gradient-to-t from-[#001845] via-transparent to-transparent" />
           {/* Speech Bubble */}
-          <div className="absolute -top-20 left-32 w-64 rounded-2xl bg-white text-[#001845] p-4 shadow-2xl min-h-[80px] flex items-center">
+          <div className="absolute -top-20 left-0 w-64 rounded-2xl bg-white text-[#001845] p-4 shadow-2xl min-h-[80px] flex items-center">
             <p className="text-sm font-medium leading-relaxed">
               {displayText}
               {isTyping && <span className="animate-pulse">|</span>}
             </p>
             {/* Bubble Tail */}
-            <div className="absolute left-6 -bottom-2 w-4 h-4 bg-white rotate-45" />
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-4 h-4 bg-white rotate-45" />
           </div>
           <img
             src={mascot}
