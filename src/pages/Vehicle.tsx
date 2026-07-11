@@ -140,6 +140,7 @@ export default function VehiclesPage() {
   return (
     <DashboardLayout>
       <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 px-4 sm:px-0">
+        
         {/* Hero Section */}
         <div className="bg-primary rounded-md text-white relative overflow-hidden isolate">
           {/* Background */}
