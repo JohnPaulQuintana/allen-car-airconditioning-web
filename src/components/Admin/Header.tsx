@@ -24,11 +24,11 @@ export default function Header() {
 
           <div>
             <h1 className="text-white font-bold">
-              Allen Car Aircon
+              Allen Car Airconditioning
             </h1>
 
             <p className="text-white/50 text-xs">
-              Management System
+              San Jose Balanga, Bataan
             </p>
           </div>
         </div>
