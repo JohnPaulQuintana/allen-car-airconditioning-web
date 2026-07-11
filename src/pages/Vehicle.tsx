@@ -277,7 +277,7 @@ export default function VehiclesPage() {
         </div>
 
         {/* Vehicle List */}
-        <div className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
+        <div className="bg-white p-1 rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
           <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
             <h2 className="font-semibold text-primary">Vehicle Records</h2>
 
