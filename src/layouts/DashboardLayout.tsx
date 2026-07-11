@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: Props) {
         </div>
 
         {/* Content */}
-        <main className="flex-1 p-6 lg:p-8 pb-24 lg:pb-8">
+        <main className="flex-1 p-2 pb-24 lg:pb-8">
           {children}
         </main>
       </div>

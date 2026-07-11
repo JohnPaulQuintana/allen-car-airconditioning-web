@@ -4,6 +4,8 @@ import {
   FiPlus,
   FiTruck,
   FiChevronRight,
+  // FiUser,
+  // FiClipboard,
 } from "react-icons/fi";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useCamera } from "../hooks/useCamera";
@@ -12,6 +14,7 @@ import PlateScannerModal from "../components/Admin/PlateScannerModal";
 import { recognizePlate } from "../services/ocr.service";
 import { useNavigate } from "react-router-dom";
 import { useVehicle } from "../hooks/useVehicle";
+import mascot from "../assets/images/mascot-trans.png";
 
 export default function VehiclesPage() {
   const navigate = useNavigate();
@@ -23,7 +26,28 @@ export default function VehiclesPage() {
   const [extractedPlate, setExtractedPlate] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [searchPlate, setSearchPlate] = useState("");
-
+  const mascotGreetings = [
+    "Welcome back! Ready to work?",
+    "Let's get today's work started!",
+    "Ready to manage your workshop?",
+    "Let's keep everything organized today.",
+    "Time to deliver excellent service!",
+    "Your workshop is ready today.",
+    "Let's make today productive together.",
+    "Ready to help your customers?",
+    "Everything is ready to go!",
+    "Let's keep vehicles moving safely.",
+    "Search vehicles in just seconds.",
+    "Manage your workshop with confidence.",
+    "Another productive day awaits you.",
+    "Let's get every job done.",
+    "Your service dashboard is ready.",
+    "Let's build customer satisfaction today.",
+    "Ready for another busy day?",
+    "Let's keep records up-to-date.",
+    "Everything you need is here.",
+    "Let's make every service count.",
+  ];
   useEffect(() => {
     if (isOpen) {
       attachVideo();
@@ -105,6 +129,10 @@ export default function VehiclesPage() {
     return pages;
   };
 
+  const [greeting] = useState(
+    () => mascotGreetings[Math.floor(Math.random() * mascotGreetings.length)],
+  );
+
   useEffect(() => {
     fetchVehicles(1);
   }, []);
@@ -112,29 +140,111 @@ export default function VehiclesPage() {
   return (
     <DashboardLayout>
       <div className="w-full max-w-7xl mx-auto space-y-6 overflow-x-hidden">
-        {/* Search + Actions */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5">
-          {/* Search */}
-          <div className="bg-primary rounded-3xl p-6 text-white">
-            <p className="text-white/60 text-xs uppercase tracking-wider">
-              Vehicle Lookup
-            </p>
+        {/* Hero Section */}
+        <div className="bg-primary rounded-md text-white relative overflow-hidden isolate">
+          {/* Background */}
+        <div className="absolute inset-0 -z-10">
+            <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-60 h-60 bg-cyan-400/10 rounded-full blur-3xl" />
+        </div>
+          {/* ========================= */}
+          {/* Desktop */}
+          {/* ========================= */}
+          <div className="hidden sm:flex items-center z-10">
+            {/* Mascot */}
+            <div className="flex-shrink-0">
+              <img
+                src={mascot}
+                alt="Mascot"
+                className="w-60 object-contain drop-shadow-2xl"
+              />
+            </div>
 
-            <h1 className="text-3xl font-bold mt-2">Search Vehicle</h1>
+            {/* Content */}
+            <div className="w-full pb-2">
+              <h1 className="mt-5 text-2xl font-bold leading-tight">
+                Find a Vehicle
+              </h1>
 
-            <p className="text-white/70 mt-2">
-              Search by plate number or customer name.
-            </p>
+              <p className="text-white/70 text-lg leading-8">
+                Enter a plate number to view service history and vehicle
+                information.
+              </p>
 
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <div className="flex-1 bg-white rounded-2xl px-4 flex items-center">
+              <div className="mt-8 flex flex-wrap gap-3">
+                <div className="flex-1 max-w-md bg-white rounded-md px-4 flex items-center">
+                  <FiSearch size={18} className="text-slate-400" />
+
+                  <input
+                    type="text"
+                    value={searchPlate}
+                    onChange={(e) => setSearchPlate(e.target.value)}
+                    placeholder="Plate Number: ABC1234"
+                    className="flex-1 px-3 py-3 outline-none text-slate-700 bg-transparent"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
+                  />
+                </div>
+
+                <button
+                  onClick={handleSearch}
+                  disabled={!searchPlate.trim()}
+                  className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 hover:bg-white/20 px-4 py-2 backdrop-blur disabled:opacity-50
+      disabled:cursor-not-allowed
+      transition"
+                >
+                  <FiSearch />
+                  <span>Search</span>
+                </button>
+
+                <div
+                  onClick={openCamera}
+                  className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 hover:cursor-pointer hover:bg-white/20 px-4 py-2 backdrop-blur"
+                >
+                  <FiCamera />
+                  <span>Scan</span>
+                </div>
+              </div>
+
+              {/* <button
+                onClick={() => navigate("/vehicle")}
+                className="mt-8 bg-white text-primary px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 hover:bg-white/90 transition shadow-lg"
+              >
+                <FiSearch />
+                Search Vehicle
+              </button> */}
+            </div>
+          </div>
+
+          {/* ========================= */}
+          {/* Mobile */}
+          {/* ========================= */}
+
+          <div className="sm:hidden px-6 py-4">
+            <div className="relative flex justify-center">
+              {/* Bubble */}
+
+              <div className="absolute -top-2 -right-4 w-24 rounded-2xl bg-white text-primary p-3 shadow-xl">
+                <p className="text-xs font-medium leading-tight">{greeting}</p>
+
+                <div className="absolute -left-2 bottom-6 w-4 h-4 bg-white rotate-45" />
+              </div>
+
+              <img src={mascot} alt="Mascot" className="w-40 object-contain" />
+            </div>
+
+            <div className="flex flex-wrap gap-3 items-center justify-center">
+              <div className="flex-1 max-w-md bg-white rounded-md px-4 flex items-center">
                 <FiSearch size={18} className="text-slate-400" />
 
                 <input
                   type="text"
                   value={searchPlate}
                   onChange={(e) => setSearchPlate(e.target.value)}
-                  placeholder="Plate Number or Customer Name"
+                  placeholder="Plate Number: ABC1234"
                   className="flex-1 px-3 py-3 outline-none text-slate-700 bg-transparent"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -147,92 +257,24 @@ export default function VehiclesPage() {
               <button
                 onClick={handleSearch}
                 disabled={!searchPlate.trim()}
-                className="
-      bg-white
-      text-primary
-      px-6
-      py-3
-      rounded-2xl
-      font-semibold
-      border
-      border-white/20
-      hover:bg-slate-50
-      disabled:opacity-50
+                className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 hover:bg-white/20 px-4 py-2 backdrop-blur disabled:opacity-50
       disabled:cursor-not-allowed
-      transition
-    "
+      transition"
               >
-                Search
+                <FiSearch />
+                <span>Search</span>
               </button>
 
-              <button
+              <div
                 onClick={openCamera}
-                className="
-      bg-white
-      text-primary
-      px-5
-      py-3
-      rounded-2xl
-      font-semibold
-      flex
-      items-center
-      justify-center
-      gap-2
-      hover:bg-slate-50
-      transition
-    "
+                className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 hover:cursor-pointer hover:bg-white/20 px-4 py-2 backdrop-blur"
               >
                 <FiCamera />
-                Scan
-              </button>
+                <span>Scan</span>
+              </div>
             </div>
           </div>
-
-          {/* Quick Actions */}
-          {/* <div className="grid gap-4">
-            <button
-              onClick={() => navigate("/vehicle/add")}
-              className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm text-left hover:shadow-md transition"
-            >
-              <div className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center">
-                <FiPlus />
-              </div>
-
-              <h3 className="font-semibold text-primary mt-4">Add Vehicle</h3>
-
-              <p className="text-sm text-slate-500 mt-1">
-                Register new vehicle
-              </p>
-            </button>
-          </div> */}
         </div>
-
-        {/* Stats */}
-        {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
-            <p className="text-sm text-slate-500">Vehicles</p>
-
-            <h2 className="text-3xl font-bold text-primary mt-2">1,254</h2>
-          </div>
-
-          <div className="bg-primary rounded-3xl p-5 text-white">
-            <p className="text-sm text-white/60">Records</p>
-
-            <h2 className="text-3xl font-bold mt-2">3,890</h2>
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
-            <p className="text-sm text-slate-500">Technicians</p>
-
-            <h2 className="text-3xl font-bold text-primary mt-2">5</h2>
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
-            <p className="text-sm text-slate-500">Searches Today</p>
-
-            <h2 className="text-3xl font-bold text-primary mt-2">47</h2>
-          </div>
-        </div> */}
 
         {/* Vehicle List */}
         <div className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
