@@ -236,7 +236,7 @@ export default function DashboardPage() {
           </button>
 
           <button
-            onClick={() => navigate("/service")}
+            onClick={() => navigate("/vehicle")}
             className="bg-white rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 border border-slate-100 shadow-card hover:shadow-lg transition text-left"
           >
             <div className="flex items-center gap-3 sm:gap-4">
@@ -255,7 +255,7 @@ export default function DashboardPage() {
           </button>
 
           <button
-            onClick={() => navigate("/technicians")}
+            onClick={() => navigate("/technician")}
             className="bg-white rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 border border-slate-100 shadow-card hover:shadow-lg transition text-left"
           >
             <div className="flex items-center gap-3 sm:gap-4">
