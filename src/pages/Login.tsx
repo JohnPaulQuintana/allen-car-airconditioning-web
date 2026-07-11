@@ -350,7 +350,7 @@ export default function LoginPage(): JSX.Element {
   const [displayText, setDisplayText] = useState<string>("");
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("admin@example.com");
-  const [password, setPassword] = useState<string>("Admin123!");
+  const [password, setPassword] = useState<string>("");
 
   const { login, loading, error, success } = useAuth();
 
