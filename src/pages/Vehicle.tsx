@@ -143,10 +143,10 @@ export default function VehiclesPage() {
         {/* Hero Section */}
         <div className="bg-primary rounded-md text-white relative overflow-hidden isolate">
           {/* Background */}
-        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 -z-10">
             <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-60 h-60 bg-cyan-400/10 rounded-full blur-3xl" />
-        </div>
+          </div>
           {/* ========================= */}
           {/* Desktop */}
           {/* ========================= */}
@@ -283,9 +283,29 @@ export default function VehiclesPage() {
 
             <div
               onClick={() => navigate("/vehicle/add")}
-              className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center"
+              className="
+    inline-flex
+    items-center
+    justify-center
+    gap-2
+    rounded-xl
+    bg-primary
+    px-5
+    py-3
+    text-white
+    font-medium
+    shadow-md
+    hover:bg-primary/90
+    hover:shadow-lg
+    active:scale-95
+    transition-all
+    duration-200
+    cursor-pointer
+    select-none
+  "
             >
-              <FiPlus />
+              <FiPlus className="w-5 h-5" />
+              <span>Add Vehicle</span>
             </div>
           </div>
 
