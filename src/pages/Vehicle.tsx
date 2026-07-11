@@ -325,41 +325,87 @@ export default function VehiclesPage() {
 
           {/* Desktop Table */}
           {!loading && vehicles.length > 0 && (
-            <div className="hidden lg:block overflow-x-auto">
+            <div className="hidden lg:block overflow-hidden rounded-2xl border border-slate-200 bg-white">
               <table className="w-full">
-                <thead>
-                  <tr className="border-b border-slate-100 text-left text-sm text-slate-500">
-                    <th className="px-6 py-4 font-medium">Plate Number</th>
-
-                    <th className="font-medium">Owner</th>
-
-                    <th className="font-medium">Vehicle</th>
-
-                    <th className="font-medium">Last Service</th>
-
-                    <th />
+                <thead className="bg-slate-50">
+                  <tr className="text-left text-sm text-slate-500">
+                    <th className="px-6 py-4 font-semibold">Plate Number</th>
+                    <th className="px-6 py-4 font-semibold">Owner</th>
+                    <th className="px-6 py-4 font-semibold">Vehicle</th>
+                    <th className="px-6 py-4 font-semibold">Last Service</th>
+                    <th className="w-16"></th>
                   </tr>
                 </thead>
 
                 <tbody>
                   {vehicles.map((vehicle: any) => (
                     <tr
-                      key={vehicle.plate_number}
+                      key={vehicle.id}
                       onClick={() => navigate(`/vehicle/${vehicle.id}`)}
-                      className="border-b border-slate-100 hover:bg-slate-50 cursor-pointer transition"
+                      className="
+              group
+              cursor-pointer
+              border-t
+              border-slate-100
+              hover:bg-primary/5
+              transition
+            "
                     >
-                      <td className="px-6 py-5 font-semibold text-primary">
-                        {vehicle.plate_number}
+                      {/* Plate */}
+                      <td className="px-6 py-5">
+                        <span className="inline-flex rounded-lg bg-primary/10 px-3 py-1 text-sm font-bold tracking-wider text-primary">
+                          {vehicle.plate_number}
+                        </span>
                       </td>
 
-                      <td className="text-slate-700">{vehicle.plate_number}</td>
+                      {/* Owner */}
+                      <td className="px-6 py-5">
+                        <div className="font-semibold text-slate-800">
+                          {vehicle.owner_name}
+                        </div>
 
-                      <td className="text-slate-700">{vehicle.vehicle_name}</td>
+                        <div className="text-sm text-slate-500">
+                          Vehicle Owner
+                        </div>
+                      </td>
 
-                      <td className="text-slate-500">{vehicle.service_date}</td>
+                      {/* Vehicle */}
+                      <td className="px-6 py-5">
+                        <div className="font-medium text-slate-800">
+                          {vehicle.vehicle_name}
+                        </div>
 
-                      <td className="pr-6 text-right">
-                        <FiChevronRight className="inline text-slate-400" />
+                        <div className="text-sm text-slate-500">
+                          Registered Vehicle
+                        </div>
+                      </td>
+
+                      {/* Service */}
+                      <td className="px-6 py-5">
+                        <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-primary">
+                          {vehicle.service_date || "No Record"}
+                        </span>
+                      </td>
+
+                      {/* Action */}
+                      <td className="px-6 py-5 text-right">
+                        <div
+                          className="
+                  inline-flex
+                  h-10
+                  w-10
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-slate-100
+                  text-slate-500
+                  group-hover:bg-primary
+                  group-hover:text-white
+                  transition
+                "
+                        >
+                          <FiChevronRight />
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -370,38 +416,85 @@ export default function VehiclesPage() {
 
           {/* Mobile Cards */}
           {!loading && vehicles.length > 0 && (
-            <div className="lg:hidden">
-              {vehicles.map((vehicle, index) => (
+            <div className="space-y-4 lg:hidden">
+              {vehicles.map((vehicle) => (
                 <button
                   key={vehicle.id}
                   onClick={() => navigate(`/vehicle/${vehicle.id}`)}
-                  className={`w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50 ${
-                    index !== vehicles.length - 1
-                      ? "border-b border-slate-100"
-                      : ""
-                  }`}
+                  className="
+          group
+          w-full
+          rounded-2xl
+          border
+          border-slate-200
+          bg-white
+          p-5
+          text-left
+          shadow-sm
+          transition-all
+          hover:border-primary/20
+          hover:shadow-md
+          active:scale-[0.98]
+        "
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center">
-                      <FiTruck className="text-primary" />
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10">
+                        <FiTruck className="text-xl text-primary" />
+                      </div>
+
+                      <div>
+                        <span className="inline-flex rounded-lg bg-primary/10 px-3 py-1 text-xs font-bold tracking-wider text-primary">
+                          {vehicle.plate_number}
+                        </span>
+
+                        <h3 className="mt-3 text-lg font-semibold text-slate-800">
+                          {vehicle.vehicle_name}
+                        </h3>
+
+                        <p className="text-sm text-slate-500">
+                          {vehicle.owner_name}
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="text-left">
-                      <p className="font-semibold text-primary">
-                        {vehicle.plate_number}
-                      </p>
-
-                      <p className="text-sm text-slate-500">
-                        {vehicle.vehicle_name}
-                      </p>
-
-                      <p className="text-xs text-slate-400">
-                        {vehicle.owner_name}
-                      </p>
+                    <div
+                      className="
+              flex
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-full
+              bg-slate-100
+              text-slate-400
+              transition
+              group-hover:bg-primary
+              group-hover:text-white
+            "
+                    >
+                      <FiChevronRight />
                     </div>
                   </div>
 
-                  <FiChevronRight className="text-slate-400" />
+                  {/* Divider */}
+                  <div className="my-4 h-px bg-slate-100" />
+
+                  {/* Footer */}
+                  <div className="flex items-center justify-between text-sm">
+                    <div>
+                      <p className="text-slate-400">Last Service</p>
+
+                      <p className="font-medium text-slate-700">
+                        {vehicle.service_date || "No Record"}
+                      </p>
+                    </div>
+
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                      Active
+                    </span>
+                  </div>
                 </button>
               ))}
             </div>
