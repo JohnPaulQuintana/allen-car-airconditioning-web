@@ -1,5 +1,13 @@
 import { api } from "../lib/api";
 
+export interface EditHistoryPayload {
+  date: string;
+  parts: {
+    id?: number;
+    name: string;
+  }[];
+}
+
 export interface VehiclePartPayload {
   name: string;
   price: string;
@@ -150,6 +158,12 @@ export const vehicleService = {
         ...data,
         _method: "PUT",
       }),
+    });
+  },
+  editHistory(vehicleId: number, payload: EditHistoryPayload) {
+    return api(`/vehicle/history/${vehicleId}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
     });
   },
 };

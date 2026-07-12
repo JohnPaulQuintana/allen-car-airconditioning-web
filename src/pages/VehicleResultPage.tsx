@@ -97,6 +97,7 @@ export default function VehicleResultPage() {
       });
     }
   };
+  
   useEffect(() => {
     if (!plateNumber) {
       navigate("/vehicles");

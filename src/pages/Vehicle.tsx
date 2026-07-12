@@ -383,7 +383,7 @@ export default function VehiclesPage() {
 
                       {/* Service */}
                       <td className="px-6 py-5">
-                        <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-primary">
+                        <span className="inline-flex rounded-full bg-primary px-3 py-1 text-sm font-medium text-white">
                           {vehicle.service_date || "No Record"}
                         </span>
                       </td>
@@ -492,7 +492,7 @@ export default function VehiclesPage() {
                       </p>
                     </div>
 
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                    <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-white">
                       Active
                     </span>
                   </div>
@@ -576,6 +576,7 @@ export default function VehiclesPage() {
             </div>
           )}
         </div>
+
         {isOpen && (
           <PlateScannerModal
             videoRef={videoRef}

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { FiPlus, FiSave, FiX } from "react-icons/fi";
-// import Popup from "../../Popup";
+import { FiPlus, FiSave, FiX, FiUser, FiMapPin, FiCalendar, FiHash } from "react-icons/fi";
 import PopupDarker from "../../PopupDarker";
+
 interface AddVehicleFormProps {
   onSubmit?: (data: {
     ownerName: string;
@@ -19,7 +19,6 @@ interface AddVehicleFormProps {
 
 export default function AddVehicleForm({
   onSubmit,
-  // onCancel,
 }: AddVehicleFormProps) {
   const today = new Date().toISOString().split("T")[0];
   const [parts, setParts] = useState([
@@ -80,8 +79,6 @@ export default function AddVehicleForm({
     }));
   };
 
- 
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -130,84 +127,75 @@ export default function AddVehicleForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden"
+      className="max-w-4xl bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden"
     >
       {/* Header */}
-      <div className="p-5 border-b border-slate-100">
-        <h2 className="font-semibold text-primary">Add Vehicle</h2>
-
-        <p className="text-sm text-slate-500 mt-1">
-          Register a new customer vehicle
-        </p>
+      <div className="px-6 py-4 border-b border-slate-200 bg-gradient-to-r from-blue-50 to-indigo-50/50">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-primary/10 rounded-xl">
+            <FiSave className="text-primary text-lg" />
+          </div>
+          <div>
+            <h2 className="font-semibold text-slate-800 text-lg">Add Vehicle</h2>
+            <p className="text-sm text-slate-500">Register a new customer vehicle</p>
+          </div>
+        </div>
       </div>
 
       {/* Form */}
-      <div className="p-5 space-y-5">
-        {/* Owner */}
-        <div>
-          <label className="block text-sm font-medium text-slate-600 mb-2">
-            Owner Name
-          </label>
-
-          <input
-            type="text"
-            value={form.ownerName}
-            onChange={(e) => handleChange("ownerName", e.target.value)}
-            placeholder="Juan Dela Cruz"
-            className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
-          />
-        </div>
-
-        {/* Address */}
-        <div>
-          <label className="block text-sm font-medium text-slate-600 mb-2">
-            Address
-          </label>
-
-          <textarea
-            rows={3}
-            value={form.address}
-            onChange={(e) => handleChange("address", e.target.value)}
-            placeholder="Customer Address"
-            className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none resize-none focus:border-primary"
-          />
-        </div>
-
-        {/* Date */}
-        <div>
-          <label className="block text-sm font-medium text-slate-600 mb-2">
-            Date
-          </label>
-
-          <input
-            type="date"
-            value={form.date}
-            onChange={(e) => handleChange("date", e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
-          />
-        </div>
-
-        {/* Vehicle + Plate */}
-        <div className="grid md:grid-cols-2 gap-4">
+      <div className="p-6 space-y-5">
+        {/* Two Column Layout for Desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+          {/* Owner */}
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-2">
+            <label className="text-xs font-medium text-slate-600 mb-1.5 flex items-center gap-1.5">
+              <FiUser className="text-primary text-sm" />
+              Owner Name
+            </label>
+            <input
+              type="text"
+              value={form.ownerName}
+              onChange={(e) => handleChange("ownerName", e.target.value)}
+              placeholder="Juan Dela Cruz"
+              className="w-full rounded-lg border border-slate-200 px-3.5 py-2 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
+            />
+          </div>
+
+          {/* Date */}
+          <div>
+            <label className="text-xs font-medium text-slate-600 mb-1.5 flex items-center gap-1.5">
+              <FiCalendar className="text-primary text-sm" />
+              Date
+            </label>
+            <input
+              type="date"
+              value={form.date}
+              onChange={(e) => handleChange("date", e.target.value)}
+              className="w-full rounded-lg border border-slate-200 px-3.5 py-2 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
+            />
+          </div>
+
+          {/* Vehicle */}
+          <div>
+            <label className="text-xs font-medium text-slate-600 mb-1.5 flex items-center gap-1.5">
+              <FiSave className="text-primary text-sm" />
               Vehicle
             </label>
-
             <input
               type="text"
               value={form.vehicle}
               onChange={(e) => handleChange("vehicle", e.target.value)}
               placeholder="Honda Civic"
-              className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
+              className="w-full rounded-lg border border-slate-200 px-3.5 py-2 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </div>
 
+          {/* Plate Number */}
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-2">
+            <label className="text-xs font-medium text-slate-600 mb-1.5 flex items-center gap-1.5">
+              <FiHash className="text-primary text-sm" />
               Plate Number
             </label>
-
             <input
               type="text"
               value={form.plateNumber}
@@ -218,44 +206,50 @@ export default function AddVehicleForm({
                 )
               }
               placeholder="ABC1234"
-              className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary uppercase"
+              className="w-full rounded-lg border border-slate-200 px-3.5 py-2 text-sm uppercase outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
+            />
+          </div>
+
+          {/* Address - Full Width */}
+          <div className="md:col-span-2">
+            <label className="text-xs font-medium text-slate-600 mb-1.5 flex items-center gap-1.5">
+              <FiMapPin className="text-primary text-sm" />
+              Address
+            </label>
+            <textarea
+              rows={2}
+              value={form.address}
+              onChange={(e) => handleChange("address", e.target.value)}
+              placeholder="Customer Address"
+              className="w-full rounded-lg border border-slate-200 px-3.5 py-2 text-sm outline-none resize-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </div>
         </div>
 
-        <div className="pb-5">
+        {/* Parts Section */}
+        <div className="pt-2 border-t border-slate-200">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-semibold text-primary">Parts Used</h3>
-
-              <p className="text-sm text-slate-500">
-                Add installed parts (price optional)
-              </p>
+              <h3 className="font-medium text-slate-800 text-sm">Parts Used</h3>
+              <p className="text-xs text-slate-500">Add installed parts (price optional)</p>
             </div>
-
-            <div
-              onClick={addPart}
-              className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center"
-            >
-              <FiPlus />
-            </div>
-
-            {/* <button
+            <button
               type="button"
               onClick={addPart}
-              className="px-4 py-2 rounded-xl bg-primary text-white text-sm"
+              className="px-3.5 py-1.5 rounded-lg bg-primary text-white text-sm font-medium flex items-center gap-1.5 transition-all hover:bg-primary/90 hover:shadow-md active:scale-95"
             >
-              + Add Part
-            </button> */}
+              <FiPlus className="text-sm" />
+              Add Part
+            </button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {[...parts].reverse().map((part, reverseIndex) => {
               const index = parts.length - 1 - reverseIndex;
 
               return (
                 <div key={index}>
-                  <div className="grid md:grid-cols-[1fr_180px_auto] gap-3 items-center">
+                  <div className="grid grid-cols-1 md:grid-cols-[1fr_160px_auto] gap-3 items-center bg-slate-50/80 p-3 rounded-lg border border-slate-200">
                     <input
                       type="text"
                       value={part.name}
@@ -263,33 +257,29 @@ export default function AddVehicleForm({
                         updatePart(index, "name", e.target.value)
                       }
                       placeholder="Part Name"
-                      className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
+                      className="rounded-lg border border-slate-200 px-3.5 py-2 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
                     />
-
                     <input
                       type="number"
                       value={part.price}
                       onChange={(e) =>
                         updatePart(index, "price", e.target.value)
                       }
-                      placeholder="Price (Optional)"
-                      className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-primary"
+                      placeholder="Price"
+                      className="rounded-lg border border-slate-200 px-3.5 py-2 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
                     />
-
-                    <div className="flex justify-end">
-                      <button
-                        type="button"
-                        onClick={() => removePart(index)}
-                        disabled={parts.length === 1}
-                        className="w-8 h-8 text-white rounded-xl bg-red-500 hover:bg-red-600 disabled:opacity-50 flex items-center justify-center"
-                      >
-                        <FiX />
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removePart(index)}
+                      disabled={parts.length === 1}
+                      className="w-8 h-8 rounded-lg bg-red-500 text-white hover:bg-red-600 disabled:opacity-40 disabled:hover:bg-red-500 flex items-center justify-center transition-colors"
+                    >
+                      <FiX className="text-sm" />
+                    </button>
                   </div>
 
                   {reverseIndex < parts.length - 1 && (
-                    <div className="my-4 border-t border-slate-200" />
+                    <div className="my-3 border-t border-slate-200/60" />
                   )}
                 </div>
               );
@@ -299,29 +289,39 @@ export default function AddVehicleForm({
       </div>
 
       {/* Footer */}
-      <div className="p-5 border-t border-slate-100 flex justify-end gap-3">
+      <div className="px-6 py-4 border-t border-slate-200 bg-slate-50/50 flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={() => {
+            if (window.confirm("Are you sure you want to cancel?")) {
+              // Handle cancel
+            }
+          }}
+          className="px-5 py-2 rounded-lg border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors"
+        >
+          Cancel
+        </button>
         <button
           type="submit"
-          className="px-5 py-3 rounded-2xl bg-primary text-white flex items-center gap-2"
+          className="px-5 py-2 rounded-lg bg-primary text-white text-sm font-medium flex items-center gap-2 transition-all hover:bg-primary/90 hover:shadow-md active:scale-95"
         >
-          <FiSave />
+          <FiSave className="text-sm" />
           Save Vehicle
         </button>
       </div>
 
-
       <PopupDarker
-  open={popup.open}
-  type={popup.type}
-  title={popup.title}
-  message={popup.message}
-  onClose={() =>
-    setPopup((prev) => ({
-      ...prev,
-      open: false,
-    }))
-  }
-/>
+        open={popup.open}
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        onClose={() =>
+          setPopup((prev) => ({
+            ...prev,
+            open: false,
+          }))
+        }
+      />
     </form>
   );
 }

@@ -14,11 +14,30 @@ import {
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useVehicleDetails } from "../hooks/useVehicleDetails";
 import EditVehicleModal from "../components/Admin/Forms/EditVehicleModal";
+import EditHistoryForm from "../components/Admin/Forms/EditHistoryForm";
+import { vehicleService } from "../services/vehicleService";
+
 import mascot from "../assets/images/mascot-trans.png";
+// import Popup from "../components/Popup";
+import PopupDarker from "../components/PopupDarker";
+
+interface Part {
+  id?: number;
+  name: string;
+  price: number | null;
+}
+
+interface History {
+  date: string;
+  total_amount: number;
+  parts: Part[];
+}
 
 export default function VehicleDetailsPage() {
   const { id } = useParams();
   const [editOpen, setEditOpen] = useState(false);
+  const [editHistoryOpen, setEditHistoryOpen] = useState(false);
+  const [editHistoryData, setEditHistoryData] = useState<History | null>(null);
   const navigate = useNavigate();
   const mascotGreetings = [
     "Welcome back! Ready to work?",
@@ -43,6 +62,13 @@ export default function VehicleDetailsPage() {
     "Let's make every service count.",
   ];
 
+  const [popup, setPopup] = useState({
+    open: false,
+    type: "success" as "success" | "error",
+    title: "",
+    message: "",
+  });
+
   const [greeting] = useState(
     () => mascotGreetings[Math.floor(Math.random() * mascotGreetings.length)],
   );
@@ -50,6 +76,12 @@ export default function VehicleDetailsPage() {
   const { vehicle, stats, timeline, loading, error, fetchVehicle } =
     useVehicleDetails();
 
+  // edit history
+  const entryToEdit = (entry: any) => {
+    console.log(entry);
+    setEditHistoryOpen(true);
+    setEditHistoryData(entry);
+  };
   useEffect(() => {
     if (id) {
       fetchVehicle(Number(id));
@@ -355,7 +387,7 @@ export default function VehicleDetailsPage() {
             </div>
 
             <span className="rounded-xl bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary">
-              {timeline.length} Records
+              Total: {timeline.length}
             </span>
           </div>
 
@@ -385,11 +417,15 @@ export default function VehicleDetailsPage() {
                       </th>
 
                       <th className="px-6 py-4 font-semibold text-center">
-                        Parts
+                        Performed Job
                       </th>
 
                       <th className="px-6 py-4 font-semibold text-right">
                         Total Amount
+                      </th>
+
+                      <th className="px-6 py-4 font-semibold text-right">
+                        Action
                       </th>
                     </tr>
                   </thead>
@@ -439,6 +475,20 @@ export default function VehicleDetailsPage() {
                               : "-"}
                           </span>
                         </td>
+
+                        {/* Action */}
+
+                        <td className="px-6 py-5 text-center">
+                          <button
+                            onClick={() => {
+                              // pass the entire entry
+                              entryToEdit(entry);
+                            }}
+                            className="border p-1 text-xl"
+                          >
+                            <FiEdit />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -464,8 +514,13 @@ export default function VehicleDetailsPage() {
                         </h3>
                       </div>
 
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                        {entry.parts.length} Parts
+                      <span
+                        onClick={() => {
+                          entryToEdit(entry);
+                        }}
+                        className="rounded-md bg-primary/10 p-2 text-sm font-semibold text-primary"
+                      >
+                        <FiEdit />
                       </span>
                     </div>
 
@@ -508,8 +563,6 @@ export default function VehicleDetailsPage() {
             </div>
           )}
         </div>
-
-        
       </div>
 
       <EditVehicleModal
@@ -520,6 +573,39 @@ export default function VehicleDetailsPage() {
           fetchVehicle(Number(id));
           setEditOpen(false);
         }}
+      />
+
+      <EditHistoryForm
+        open={editHistoryOpen}
+        history={editHistoryData}
+        onClose={() => setEditHistoryOpen(false)}
+        onSaved={async (payload) => {
+          console.log(payload);
+
+          await vehicleService.editHistory(Number(id), payload);
+
+          fetchVehicle(Number(id));
+          setEditHistoryOpen(false);
+          setPopup({
+            open: true,
+            type: "success",
+            title: "History Updated",
+            message: "Service history was updated successfully.",
+          });
+        }}
+      />
+
+      <PopupDarker
+        open={popup.open}
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        onClose={() =>
+          setPopup((prev) => ({
+            ...prev,
+            open: false,
+          }))
+        }
       />
     </DashboardLayout>
   );
